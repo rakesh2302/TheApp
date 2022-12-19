@@ -23,6 +23,7 @@ struct ContentView: View {
             let _ = PrintPackage().printLog()
             if self.scaleImage {
                 let _ = print("")
+                
             } else {
                 let _ = print("")
             }
