@@ -24,6 +24,7 @@ struct ContentView: View {
             if self.scaleImage {
                 let _ = print("")
                 
+                
             } else {
                 let _ = print("")
             }
