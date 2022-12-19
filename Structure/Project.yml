@@ -1,0 +1,88 @@
+name: ${APP_NAME}
+packages:
+  PrintPackage:
+    path: PrintPackage
+configs:
+  Devel Debug: debug
+  Devel Release: release
+  Prod Debug: debug
+  Prod Release: release
+settings:
+  configs:
+    Devel Debug:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEVEL DEBUG
+    Devel Release:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEVEL
+    Prod Debug:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: PROD DEBUG
+    Prod Release:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: PROD
+options:
+  bundleIdPrefix: com.XYZ
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "14.0"
+fileGroups:
+- project.yml
+- Configuration
+- Makefile
+targets:
+  ${APP_NAME}:
+    type: application
+    platform: iOS
+    sources: "App"
+    scheme:
+      configVariants:
+        - Devel
+        - Prod
+    preBuildScripts:
+      - path: Scripts/run-swiftlint.sh
+        name: Swiftlint
+      - path: Scripts/run-swiftformat.sh
+        name: SwiftFormat
+    settings:
+        base:
+          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+    dependencies:
+      - package: PrintPackage
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleShortVersionString: '0.0.111'
+        CFBundleVersion: '111'
+        ITSAppUsesNonExemptEncryption: false
+        UIUserInterfaceStyle: Light
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UILaunchStoryboardName: LaunchScreen
+        NSAppTransportSecurity: {NSAllowsArbitraryLoads: true}
+        PHPhotoLibraryPreventAutomaticLimitedAccessAlert: true
+        FacebookDisplayName: $(DisplayNamePrefix)${target_name}
+        FacebookAutoLogAppEventsEnabled: false
+        UIViewControllerBasedStatusBarAppearance: false
+        UIStatusBarStyle: UIStatusBarStyleDarkContent
+        NSLocationUsageDescription: Your location will be used to find stores in your area.
+        NSLocationWhenInUseUsageDescription: Your location will be used to find stores in your area.
+        NSLocationAlwaysUsageDescription: Your location will be used to find stores in your area.
+        NSPhotoLibraryUsageDescription: This allows us to find and use photos for creating personalised photo prints and gifts.
+        NSContactsUsageDescription: To share with and send to people you know.
+        NSCameraUsageDescription: Allow camera access to scan the QR code on the following screen.
+        UIBackgroundModes: ["fetch", "remote-notification"]
+        LSApplicationQueriesSchemes: [
+            "fbauth",
+            "fbauth2",
+            "fbapi",
+            "fb-messenger-share-api",
+            "fbshareextension",
+        ]
+        CFBundleURLTypes: [
+            {
+                CFBundleTypeRole: Editor,
+                CFBundleURLName: io.branch.sdk,
+                CFBundleURLSchemes: [
+                  "com.kodakalaris.${PRODUCT_NAME:rfc1034identifier}"
+                ]
+            }
+        ]
+        UIRequiresFullScreen: true
+        UserInfoSuffix: $(USER_INFO_SUFFIX)
+

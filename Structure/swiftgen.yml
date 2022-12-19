@@ -1,0 +1,21 @@
+xcassets:
+  inputs: "Structure/Assets.xcassets"
+  outputs:
+    templatePath: "Configuration/Templates/assets.stencil"
+    output: "App/SupportingFiles/Generated/Assets.swift"
+json:
+    inputs:
+    - "App/SupportingFiles/Base.lproj/Translations.json"
+    outputs:
+      templatePath: "Configuration/Templates/strings.stencil"
+      output: "App/SupportingFiles/Generated/Strings.swift"
+      params:
+        publicAccess: true
+        enumName: Strings
+colors:
+  inputs: "Configuration/Resources/Colors.json"
+  outputs:
+    templatePath: "Configuration/Templates/colors.stencil"
+    output: "App/SupportingFiles/Generated/Colors.swift"
+    params:
+      publicAccess: true
